@@ -144,9 +144,13 @@ function useCrossnoteContainer(initialState: InitialState) {
     (note: Note) => {
       setSelectedNote(note);
       const notebook = note.notebook;
+      let p = window.location.pathname;
+      if ( p.endsWith('/') ) {
+        p = p.substring(0, p.length-1);
+      }
       if (notebook.gitURL) {
         browserHistory.push(
-          `/?repo=${encodeURIComponent(
+          `${p}/?repo=${encodeURIComponent(
             notebook.gitURL,
           )}&branch=${encodeURIComponent(
             notebook.gitBranch || "master",
@@ -154,7 +158,7 @@ function useCrossnoteContainer(initialState: InitialState) {
         );
       } else {
         browserHistory.push(
-          `/?notebookID=${notebook._id}&filePath=${encodeURIComponent(
+          `${p}/?notebookID=${notebook._id}&filePath=${encodeURIComponent(
             note.filePath,
           )}`,
         );
@@ -475,14 +479,18 @@ function useCrossnoteContainer(initialState: InitialState) {
     (notebook: Notebook) => {
       localStorage.setItem("selectedNotebookID", notebook._id);
       setSelectedNotebook(notebook);
+      let p = window.location.pathname;
+      if ( p.endsWith('/') ) {
+        p = p.substring(0, p.length-1);
+      }
       if (notebook.gitURL) {
         browserHistory.push(
-          `/?repo=${encodeURIComponent(
+          `${p}/?repo=${encodeURIComponent(
             notebook.gitURL,
           )}&branch=${encodeURIComponent(notebook.gitBranch || "master")}`,
         );
       } else {
-        browserHistory.push(`/?notebookID=${notebook._id}`);
+        browserHistory.push(`${p}/?notebookID=${notebook._id}`);
       }
     },
     [setSelectedNotebook],

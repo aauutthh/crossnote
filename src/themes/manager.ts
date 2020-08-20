@@ -17,7 +17,7 @@ export function setTheme({
   return VickyMDSetTheme({
     editor,
     themeName,
-    baseUri: `/styles/vickymd@${VickyMDVersion}/`,
+    baseUri: `./styles/vickymd@${VickyMDVersion}/`,
   });
 }
 

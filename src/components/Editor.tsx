@@ -1751,6 +1751,11 @@ export default function Editor(props: Props) {
     );
   }
 
+  let p = window.location.pathname;
+  if ( p.endsWith('/') ) {
+    p = p.substring(0, p.length-1);
+  }
+
   return (
     <Box className={clsx(classes.editorPanel, "editor-panel")}>
       <Box className={clsx(classes.topPanel, "editor-toolbar")}>
@@ -2010,14 +2015,18 @@ export default function Editor(props: Props) {
                 <Tooltip
                   title={t("editor/note-control/copy-to-clipboard")}
                   onClick={() => {
+                    let p = window.location.pathname;
+                    if ( p.endsWith('/') ) {
+                      p = p.substring(0, p.length-1);
+                    }
                     copyToClipboard(
                       note.notebook.gitURL
-                        ? `${window.location.origin}/?repo=${encodeURIComponent(
+                        ? `${p}/?repo=${encodeURIComponent(
                             note.notebook.gitURL,
                           )}&branch=${encodeURIComponent(
                             note.notebook.gitBranch || "master",
                           )}&filePath=${encodeURIComponent(note.filePath)}`
-                        : `${window.location.origin}/?notebookID=${
+                        : `${p}/?notebookID=${
                             note.notebook._id
                           }&filePath=${encodeURIComponent(note.filePath)}`,
                     );
@@ -2031,12 +2040,12 @@ export default function Editor(props: Props) {
                   onChange={(event) => event.preventDefault()}
                   value={
                     note.notebook.gitURL
-                      ? `${window.location.origin}/?repo=${encodeURIComponent(
+                      ? `${p}/?repo=${encodeURIComponent(
                           note.notebook.gitURL,
                         )}&branch=${encodeURIComponent(
                           note.notebook.gitBranch || "master",
                         )}&filePath=${encodeURIComponent(note.filePath)}`
-                      : `${window.location.origin}/?notebookID=${
+                      : `${p}/?notebookID=${
                           note.notebook._id
                         }&filePath=${encodeURIComponent(note.filePath)}`
                   }

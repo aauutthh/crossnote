@@ -245,8 +245,12 @@ export function NotebookPanel(props: Props) {
             );
             if (alreadyDownloaded) {
               const filePath = href.replace(/^\/+/, "").replace(/^\.\/+/, "");
+              let p = window.location.pathname;
+              if ( p.endsWith('/') ) {
+                p = p.substring(0, p.length-1);
+              }
               browserHistory.push(
-                `/?repo=${encodeURIComponent(
+                `${p}/?repo=${encodeURIComponent(
                   notebook.gitURL,
                 )}&branch=${encodeURIComponent(
                   notebook.gitBranch || "master",

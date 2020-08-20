@@ -10,7 +10,7 @@ if ("function" === typeof importScripts) {
     workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
 
     /* custom cache rules*/
-    const handler = workbox.precaching.createHandlerBoundToURL("/index.html");
+    const handler = workbox.precaching.createHandlerBoundToURL("./index.html");
     const navigationRoute = new workbox.routing.NavigationRoute(handler, {
       denylist: [
         // Exclude URLs starting with /_, as they're likely an API call
