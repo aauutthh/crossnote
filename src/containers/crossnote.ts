@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { env } from "../env";
 import { createContainer } from "unstated-next";
 import * as path from "path";
 import Noty from "noty";
@@ -144,13 +145,10 @@ function useCrossnoteContainer(initialState: InitialState) {
     (note: Note) => {
       setSelectedNote(note);
       const notebook = note.notebook;
-      let p = window.location.pathname;
-      if ( p.endsWith('/') ) {
-        p = p.substring(0, p.length-1);
-      }
       if (notebook.gitURL) {
         browserHistory.push(
-          `${p}/?repo=${encodeURIComponent(
+          //`${env.approot}/?repo=${encodeURIComponent(
+          `/?repo=${encodeURIComponent(
             notebook.gitURL,
           )}&branch=${encodeURIComponent(
             notebook.gitBranch || "master",
@@ -158,7 +156,8 @@ function useCrossnoteContainer(initialState: InitialState) {
         );
       } else {
         browserHistory.push(
-          `${p}/?notebookID=${notebook._id}&filePath=${encodeURIComponent(
+          //`${env.approot}/?notebookID=${notebook._id}&filePath=${encodeURIComponent(
+          `/?notebookID=${notebook._id}&filePath=${encodeURIComponent(
             note.filePath,
           )}`,
         );
@@ -479,18 +478,16 @@ function useCrossnoteContainer(initialState: InitialState) {
     (notebook: Notebook) => {
       localStorage.setItem("selectedNotebookID", notebook._id);
       setSelectedNotebook(notebook);
-      let p = window.location.pathname;
-      if ( p.endsWith('/') ) {
-        p = p.substring(0, p.length-1);
-      }
       if (notebook.gitURL) {
         browserHistory.push(
-          `${p}/?repo=${encodeURIComponent(
+          //`${env.approot}/?repo=${encodeURIComponent(
+          `/?repo=${encodeURIComponent(
             notebook.gitURL,
           )}&branch=${encodeURIComponent(notebook.gitBranch || "master")}`,
         );
       } else {
-        browserHistory.push(`${p}/?notebookID=${notebook._id}`);
+        //browserHistory.push(`${env.approot}/?notebookID=${notebook._id}`);
+        browserHistory.push(`/?notebookID=${notebook._id}`);
       }
     },
     [setSelectedNotebook],
